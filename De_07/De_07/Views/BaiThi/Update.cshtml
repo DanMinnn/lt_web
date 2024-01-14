@@ -1,0 +1,113 @@
+﻿@model De_07.Models.SanPham
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    De_07.Models.QLBanChauCanhEntities db = new De_07.Models.QLBanChauCanhEntities();
+}
+
+@using (Html.BeginForm("Update", "BaiThi", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.MaSanPham)
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MaSanPham)
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Tên sản phẩm</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenSanPham, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Mã phân loại</label>
+            <div class="col-md-10">
+                <select name="MaPLP" class="form-control">
+                    @foreach (var plp in db.PhanLoais.ToList())
+                    {
+                        <option value="@plp.MaPhanLoai">@plp.PhanLoaiChinh</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Giá nhập</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GiaNhap, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GiaNhap, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Đơn giá bán nhỏ nhất</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DonGiaBanNhoNhat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DonGiaBanNhoNhat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Đơn giá bán lớn nhất</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DonGiaBanLonNhat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DonGiaBanLonNhat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Trạng thái</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TrangThai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Mã phân loại phụ</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SelectedMaPLP,
+                new SelectList(db.PhanLoaiPhus.ToList(), "MaPhanLoaiPhu", "TenPhanLoaiPhu", Model.SelectedMaPLP),
+                new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Mô tả ngắn</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MoTaNgan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MoTaNgan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Ảnh đại diện</label>
+            <div class="col-md-10">
+                <input type="file" name="FileAnh" />
+                @Html.ValidationMessageFor(model => model.AnhDaiDien, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-10 " style="margin-top: 10px">Nổi bật</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoiBat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NoiBat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cập nhật" class="btn btn-default" />
+                @Html.ActionLink("Xóa", "Xoa", new { id = Model.MaSanPham }, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+

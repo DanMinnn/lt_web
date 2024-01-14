@@ -1,0 +1,79 @@
+﻿@*@model IEnumerable<De_07.Models.PhanLoai>*@
+@model IEnumerable<De_07.Models.SanPham>
+
+@{ De_07.Models.QLBanChauCanhEntities db = new De_07.Models.QLBanChauCanhEntities(); }
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Section Heading -->
+                <div class="section-heading text-center">
+                    <h2>OUR PORTFOLIO</h2>
+                    <p>Đặng Ngọc Minh - CNTT K62</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="alazea-portfolio-filter">
+                    <div class="portfolio-filter">
+
+                        @foreach (var pl in db.PhanLoais.ToList())
+                        {
+            <button id="@pl.MaPhanLoai" class="btn" data-filter=".design">@pl.PhanLoaiChinh</button>}
+
+                        @*<button class="btn active" data-filter="*">All</button>
+                            <button class="btn" data-filter=".design">Coffee Design</button>
+                            <button class="btn" data-filter=".garden">Garden</button>
+                            <button class="btn" data-filter=".home-design">Home Design</button>
+                            <button class="btn" data-filter=".office-design">Office Design</button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row alazea-portfolio">
+
+            <!-- Single Portfolio Area -->
+            @foreach (var sp in Model)
+            {
+            <div class="col-12 col-sm-6 col-lg-3 single_portfolio_item design home-design wow fadeInUp">
+                
+                <!-- Portfolio Thumbnail -->
+
+                <div class="portfolio-thumbnail bg-img" style="background-image: url('@Url.Content("~/Content/img/bg-img/" + sp.AnhDaiDien)');">
+                </div>
+                    <!-- Portfolio Hover Text -->
+                    <div class="portfolio-hover-overlay">
+                        <a href="@Url.Action("Update","BaiThi", new {id = sp.MaSanPham })">
+
+                            <div class="port-hover-text" style="margin-top: 170px">
+                                <h3>@sp.TenSanPham</h3>
+                                <h5>@sp.DonGiaBanNhoNhat</h5>
+                            </div>
+                        </a>
+                    </div>
+            </div>
+                
+            }
+         </div>
+    </div>
+
+
+<script>
+    $(".btn").click(function (e) {
+        var id = $(this).attr("id");
+        $.ajax({
+            url: "ProductById",
+            data: { CatId: id },
+            success: function (response) {
+                $(".alazea-portfolio-area.section-padding-100-0").html(response);
+            }
+        });
+    });
+
+</script>

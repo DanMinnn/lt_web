@@ -1,0 +1,37 @@
+﻿@model IEnumerable<De_08.Models.Entities.SanPham>
+
+<!-- Mobile Nav (max width 767px)-->
+<div class="mobile-nav">
+    <!-- Navbar Brand -->
+    <div class="amado-navbar-brand">
+        <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+    </div>
+    <!-- Navbar Toggler -->
+    <div class="amado-navbar-toggler">
+        <span></span><span></span><span></span>
+    </div>
+</div>
+
+<!-- Header Area Start -->
+@Html.Action("Menu", "BaiThi")
+<!-- Header Area End -->
+<!-- Product Catagories Area Start -->
+<div class="products-catagories-area clearfix">
+    <div class="amado-pro-catagory clearfix">
+        @foreach (var sp in Model)
+        {<!-- Single Catagory -->
+                            <div class="single-products-catagory clearfix">
+                                <a href="@Url.Action("Update", "BaiThi", new {id = sp.MaSanPham })">
+                                    <img src="~/Content/img/bg-img/@sp.AnhDaiDien" alt="">
+                                    <!-- Hover Content -->
+                                    <div class="hover-content">
+                                        <div class="line"></div>
+                                        <p>@sp.DonGiaBanNhoNhat đ</p>
+                                        <h4>@sp.TenSanPham</h4>
+                                    </div>
+                                </a>
+                            </div> 
+         }
+    </div>
+</div>
+<!-- Product Catagories Area End -->
