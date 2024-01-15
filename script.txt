@@ -1,0 +1,18 @@
+$(document).ready(function () {
+    $('li').on('click', function () {
+        var id = $(this).attr('id');
+
+        $.ajax({
+            url: '@Url.Action("ProductById", "BaiThi")',
+            type: 'GET',
+            data: { CatId: id },
+            success: function (response) {
+                console.log("AJAX success:", response);
+                $("div.main-content-wrapper.d-flex.clearfix").html(response);
+            },
+            error: function () {
+                alert('Đã có lỗi xảy ra khi gửi yêu cầu.');
+            }
+        });
+    });
+});
