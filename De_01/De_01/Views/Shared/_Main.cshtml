@@ -1,0 +1,67 @@
+﻿@model IEnumerable<De_01.Models.SanPham>
+
+@{ 
+    De_01.Models.QLBanQuanAoEntities db = new De_01.Models.QLBanQuanAoEntities();
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <div class="section_title new_arrivals_title">
+                <h2>New Arrivals</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col text-center">
+            <div class="new_arrivals_sorting">
+                <ul class="arrivals_grid_sorting clearfix button-group filters-button-group">
+                    <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">Tất cả sản phẩm</li>
+                    @foreach (var pl in db.PhanLoais.ToList())
+                    {
+                        <li id="@pl.MaPhanLoai" class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">@pl.PhanLoaiChinh</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+
+                @foreach (var sp in Model)
+                {
+                    <!-- Product 1 -->
+
+                    <div class="product-item men">
+                        <div class="product discount product_filter">
+                            <div class="product_image">
+                                <img src="~/Content/images/@sp.AnhDaiDien" alt="">
+                            </div>
+                            <div class="favorite favorite_left"></div>
+                            <div class="product_info">
+                                <h6 class="product_name"><a href="single.html">@sp.TenSanPham</a></h6>
+                            </div>
+                        </div>
+                        <div class="red_button add_to_cart_button"><a href="@Url.Action("Them", "BaiThi")">Thêm một sản phẩm mới</a></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("li").click(function (e) {
+        var id = $(this).attr("id");
+        $.ajax({
+            url: "ProductById",
+            data: { CatId: id },
+            success: function (response) {
+                $(".new_arrivals").html(response);
+            }
+        });
+    });
+
+</script>
